@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>voxplayonline.com</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-layer bg-grid" aria-hidden="true"></div>
+  <div class="bg-layer bg-glow" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="brand-wrap">
+      <h1 class="brand">voxplayonline.com</h1>
+      <p class="tag">A social game platform</p>
+    </div>
+  </header>
+
+  <main class="game-shell">
+    <section class="panel auth-panel">
+      <div class="auth-head">
+        <h2>Welcome to voxplayonline.com</h2>
+        <p>Log in to continue, or create a free account in seconds.</p>
+      </div>
+
+      <div class="route-row" aria-label="Account routes">
+        <a id="routeLogin" class="route-btn active" href="#login">Log In</a>
+        <a id="routeSignup" class="route-btn" href="#signup">Create Account</a>
+        <a id="routeMenu" class="route-btn hidden" href="#menu">Menu</a>
+      </div>
+
+      <form id="loginForm" class="auth-form" novalidate>
+        <label>
+          Username
+          <input type="text" id="loginUsername" name="username" required autocomplete="username" />
+        </label>
+        <label>
+          Password
+          <input type="password" id="loginPassword" name="password" required autocomplete="current-password" />
+        </label>
+        <button type="submit" class="btn">Log In</button>
+        <button id="openSignupFromLogin" type="button" class="free-account-btn">Create free account</button>
+      </form>
+
+      <form id="signupForm" class="auth-form hidden signup-sketch" novalidate>
+        <label class="sketch-field">
+          Name (do not use real name)
+          <input type="text" id="signupUsername" name="username" required minlength="3" autocomplete="username" />
+        </label>
+
+        <label class="sketch-field">
+          Password
+          <div class="password-row">
+            <input type="password" id="signupPassword" name="password" minlength="6" required autocomplete="new-password" />
+            <button id="toggleSignupPassword" type="button" class="eye-btn" aria-label="Show password">◉</button>
+          </div>
+          <span id="passwordStrength" class="strength-label">Strength: too weak</span>
+          <div class="strength-track" aria-hidden="true">
+            <div id="strengthBar" class="strength-fill"></div>
+          </div>
+        </label>
+
+        <label class="sketch-field">
+          Email
+          <input type="email" id="signupEmail" name="email" required autocomplete="email" />
+        </label>
+
+        <label class="captcha-box">
+          <input type="checkbox" id="signupCaptcha" name="captcha" required />
+          <span>Captcha</span>
+        </label>
+
+        <button type="submit" class="btn sketch-submit">Sign Up</button>
+        <button id="backToLoginFromSignup" type="button" class="free-account-btn">Back to login</button>
+      </form>
+
+      <p id="authMessage" class="auth-message" role="status" aria-live="polite"></p>
+
+      <section id="accountCard" class="account-card hidden" aria-live="polite">
+        <h3>Logged In</h3>
+        <p id="accountSummary"></p>
+        <img id="accountAvatar" class="avatar-preview hidden" alt="Account profile picture" />
+        <button id="logoutBtn" class="btn alt">Log Out</button>
+      </section>
+
+      <section id="menuScreen" class="menu-screen hidden" aria-live="polite">
+        <div class="menu-top-strip">
+          <div>
+            <h3>Home</h3>
+            <p id="menuWelcome" class="menu-welcome"></p>
+          </div>
+          <label class="menu-search-wrap">
+            <span>Search</span>
+            <input type="text" placeholder="Search users, items, and more" />
+          </label>
+        </div>
+
+        <div class="menu-layout">
+          <aside class="menu-side">
+            <button class="menu-nav-btn active" type="button">Home</button>
+            <button class="menu-nav-btn" type="button">Discover</button>
+            <button class="menu-nav-btn" type="button">Avatar Marketplace</button>
+            <button class="menu-nav-btn" type="button">Friends</button>
+            <button class="menu-nav-btn" type="button">Messages</button>
+          </aside>
+
+          <section class="menu-main">
+            <div class="profile-strip">
+              <div>
+                <p class="profile-label">Signed in as</p>
+                <p id="menuHandle" class="profile-handle">@player</p>
+              </div>
+              <div class="currency-pill">
+                <span>Vx</span>
+                <strong id="menuCurrency">0</strong>
+              </div>
+            </div>
+
+            <div class="stats-grid">
+              <article class="stat-card">
+                <p>Friends</p>
+                <strong id="menuFriends">0</strong>
+              </article>
+              <article class="stat-card">
+                <p>Groups</p>
+                <strong id="menuGroups">0</strong>
+              </article>
+              <article class="stat-card">
+                <p>Visits</p>
+                <strong id="menuVisits">0</strong>
+              </article>
+            </div>
+
+            <section id="adminPanel" class="admin-panel hidden" aria-live="polite">
+              <div class="admin-head">
+                <h4>Admin Panel</h4>
+                <p>Manage accounts, moderation, and Vox coins.</p>
+              </div>
+
+              <div class="admin-stats-grid">
+                <article class="admin-stat">
+                  <p>Accounts</p>
+                  <strong id="adminTotalAccounts">0</strong>
+                </article>
+                <article class="admin-stat">
+                  <p>Banned</p>
+                  <strong id="adminBannedAccounts">0</strong>
+                </article>
+                <article class="admin-stat">
+                  <p>Admins</p>
+                  <strong id="adminAdminAccounts">0</strong>
+                </article>
+              </div>
+
+              <div class="admin-tools-row">
+                <label class="admin-tool-field">
+                  Select User
+                  <select id="adminUserSelect"></select>
+                </label>
+                <label class="admin-tool-field">
+                  Vox Coins
+                  <input id="adminCoinsAmount" type="number" min="1" value="100" />
+                </label>
+              </div>
+
+              <div class="admin-action-row">
+                <button id="adminGiveCoinsBtn" class="btn" type="button">Give Vox Coins</button>
+                <button id="adminBanToggleBtn" class="free-account-btn" type="button">Ban User</button>
+              </div>
+
+              <div class="admin-table-wrap">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>User</th>
+                      <th>Email</th>
+                      <th>Coins</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="adminUserTableBody"></tbody>
+                </table>
+              </div>
+            </section>
+
+            <div class="menu-section-head">
+              <h4>Continue Playing</h4>
+              <p>Jump back into your recent experiences.</p>
+            </div>
+
+            <section class="share-panel">
+              <div>
+                <h4>Share voxplayonline.com</h4>
+                <p>Send your hosted link to friends so they can open the game.</p>
+              </div>
+              <div class="share-row">
+                <input id="shareLinkInput" type="text" readonly />
+                <button id="copyShareLinkBtn" class="btn" type="button">Copy Link</button>
+                <button id="nativeShareBtn" class="free-account-btn" type="button">Share</button>
+              </div>
+            </section>
+
+            <div class="experience-grid">
+              <article class="experience-card muted">
+                <div class="experience-thumb"></div>
+                <h5>Starter Place</h5>
+                <p>Your first published place will show up here.</p>
+                <button class="btn disabled-btn" type="button">Coming Soon</button>
+              </article>
+              <article class="experience-card muted">
+                <div class="experience-thumb"></div>
+                <h5>Community Hub</h5>
+                <p>Find trending worlds and creators here soon.</p>
+                <button class="btn disabled-btn" type="button">Coming Soon</button>
+              </article>
+            </div>
+          </section>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="footnote">
+    <p>voxplayonline.com is in early access. Accounts and social features are available now.</p>
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>
